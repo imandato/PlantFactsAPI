@@ -20,23 +20,15 @@ namespace PlantApi.Services
             return await _context.PlantFacts.ToListAsync();
         }
 
-        //public PlantFact DeletePlantFact(long id)
+        //public async Task<PlantFact> DeletePlantFact(long id, PlantFact plantFact)
         //{
-        //    if (_context.PlantFacts == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var plantFact = _context.PlantFacts.FindAsync(id);
-        //    if (plantFact == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //    plantFact = _context.PlantFacts.FindAsync(id);
 
         //    _context.PlantFacts.Remove(plantFact);
         //    _context.SaveChangesAsync();
 
-        //    return NoContent();
+        //    return null;
         //}
 
         public async Task<PlantFact?> GetPlantFact(long id)
@@ -46,51 +38,29 @@ namespace PlantApi.Services
             return plantFact;
         }
 
-        //public IEnumerable<PlantFact> GetPlantFacts()
+        //public Task<PlantFact> PlantFactExists(long id)
         //{
-        //    return await _context.PlantFacts.ToListAsync();
+        //    return  _context.PlantFacts.Any(e => e.Id == id).GetValueOrDefault();
         //}
 
-        //public PlantFact PlantFactExists(long id)
-        //{
-        //    return (_context.PlantFacts?.Any(e => e.Id == id)).GetValueOrDefault();
-        //}
+        public async Task<PlantFact?> PostPlantFact(PlantFact plantFact)
+        {
+            _context.PlantFacts.Add(plantFact);
+            await _context.SaveChangesAsync();
 
-        //public async Task<PlantFact?> PostPlantFact()
-        //{
-        //    PlantFact? plantFact =  _context.PlantFacts.Add(plantFact);
-        //    await _context.SaveChangesAsync();
+            return plantFact;
+        }
 
-        //    return plantFact;
-        //}
+        public async Task<PlantFact> PutPlantFact(long id, PlantFact plantFact)
+        {
+            
+            _context.Entry(plantFact).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-        //public PlantFact PutPlantFact(long id, PlantFact plantFact)
-        //{
-        //    if (id != plantFact.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(plantFact).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!PlantFactExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
+            return plantFact;
+            
+            
+        }
     }
 }
 

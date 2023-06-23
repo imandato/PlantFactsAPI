@@ -58,16 +58,9 @@ namespace PlantApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutPlantFact(long id, PlantFact plantFact)
         {
-            if (id != plantFact.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(plantFact).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _plantService.PutPlantFact(id, plantFact);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -86,19 +79,12 @@ namespace PlantApi.Controllers
 
         //POST
         [HttpPost]
-        //[ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PostPlantFact(PlantFact plantFact)
         {
-            if (_context.PlantFacts == null)
-            {
-                return Problem("Entity set 'PlantContext.PlantFacts' is null.");
-            }
 
-           _context.PlantFacts.Add(plantFact);
-           await _context.SaveChangesAsync();
-
-            //PlantFact plantFact = await _plantService.PostPlantFact();
+            await _plantService.PostPlantFact(plantFact);
 
             return CreatedAtAction(nameof(GetPlantFact), new { id = plantFact.Id }, null);
         }
@@ -107,14 +93,13 @@ namespace PlantApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePlantFact(long id)
+        public async Task<IActionResult> DeletePlantFact(long id, PlantFact plantFact)
         {
-            if (_context.PlantFacts == null)
-            {
-                return NotFound();
-            }
+            //if (_context.PlantFacts == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var plantFact = await _context.PlantFacts.FindAsync(id);
             if (plantFact == null)
             {
                 return NotFound();

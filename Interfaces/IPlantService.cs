@@ -9,9 +9,8 @@ namespace PlantApi.Interfaces
 
         Task<IEnumerable<PlantFact>> GetAllPlantFacts();
         Task<PlantFact?> GetPlantFact(long id);
-        //PlantFact PutPlantFact(long id, PlantFact plantFact);
-        //Task<PlantFact> PostPlantFact();
-        //Task<PlantFact?> PostPlantFact(PlantFact plantFact);
+        Task<PlantFact> PutPlantFact(long id, PlantFact plantFact);
+        Task<PlantFact> PostPlantFact(PlantFact plantFact);
         //PlantFact DeletePlantFact(long id);
         //PlantFact PlantFactExists(long id);
 
