@@ -91,24 +91,27 @@ namespace PlantApi.Controllers
 
         //DELETE: based on id
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<PlantFact>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePlantFact(long id, PlantFact plantFact)
+        public async Task<IActionResult> DeletePlantFact(long id)
         {
             //if (_context.PlantFacts == null)
             //{
             //    return NotFound();
             //}
 
+
+            PlantFact? plantFact = (PlantFact?)await _plantService.DeletePlantFact(id);
+
             if (plantFact == null)
             {
                 return NotFound();
             }
 
-            _context.PlantFacts.Remove(plantFact);
-            await _context.SaveChangesAsync();
+            //_context.PlantFacts.Remove(plantFact);
+            //await _context.SaveChangesAsync();
 
-            return NoContent();
+            return new OkObjectResult(plantFact);
         }
 
         //to check the plant fact in the try catch statement in PUT
