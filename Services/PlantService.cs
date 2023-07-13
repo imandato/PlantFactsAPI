@@ -20,7 +20,7 @@ namespace PlantApi.Services
             return await _context.PlantFacts.ToListAsync();
         }
 
-        public async Task<IEnumerable<PlantFact?>> DeletePlantFact(long id)
+        public async Task<PlantFact?> DeletePlantFact(long id)
         {
 
             PlantFact? plantFact = await _context.PlantFacts.FindAsync(id);
@@ -28,8 +28,7 @@ namespace PlantApi.Services
             _context.PlantFacts.Remove(plantFact);
             _context.SaveChangesAsync();
 
-
-            return (IEnumerable<PlantFact?>)_context.PlantFacts.ToListAsync();
+            return plantFact;
         }
 
         public async Task<PlantFact?> GetPlantFact(long id)
@@ -41,7 +40,7 @@ namespace PlantApi.Services
 
         //public Task<PlantFact> PlantFactExists(long id)
         //{
-        //    return  _context.PlantFacts.Any(e => e.Id == id).GetValueOrDefault();
+        //    return _context.PlantFacts.Any(e => e.Id == id);
         //}
 
         public async Task<PlantFact?> PostPlantFact(PlantFact plantFact)
