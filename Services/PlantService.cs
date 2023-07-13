@@ -38,7 +38,7 @@ namespace PlantApi.Services
             return plantFact;
         }
 
-        //public Task<PlantFact> PlantFactExists(long id)
+        //public bool PlantFactExists(long id)
         //{
         //    return _context.PlantFacts.Any(e => e.Id == id);
         //}

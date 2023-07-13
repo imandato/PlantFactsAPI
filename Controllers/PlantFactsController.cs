@@ -112,6 +112,11 @@ namespace PlantApi.Controllers
             return (_context.PlantFacts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
+        //public bool PlantFactExists(long id)
+        //{
+        //    return (_plantService.PlantFactExists(id)).GetValueOrDefault();
+        //}
+
     }
 }
 

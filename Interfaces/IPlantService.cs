@@ -12,7 +12,7 @@ namespace PlantApi.Interfaces
         Task<PlantFact> PutPlantFact(long id, PlantFact plantFact);
         Task<PlantFact> PostPlantFact(PlantFact plantFact);
         Task<PlantFact?> DeletePlantFact(long id);
-        //PlantFact PlantFactExists(long id);
+        //bool PlantFactExists(long id);
 
 
 
