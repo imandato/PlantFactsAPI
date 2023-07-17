@@ -58,9 +58,15 @@ namespace PlantApi.Services
             await _context.SaveChangesAsync();
 
             return plantFact;
-            
-            
+
+
         }
+
+        public async Task<IEnumerable<GrowZone>> GetAllGrowZones()
+        {
+            return await _context.GrowZones.ToListAsync();
+        }
+
     }
 }
 

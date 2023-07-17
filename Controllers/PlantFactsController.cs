@@ -35,6 +35,15 @@ namespace PlantApi.Controllers
             return new OkObjectResult(await _plantService.GetAllPlantFacts()); 
         }
 
+        // GET: all plant facts
+        [HttpGet] //just for using with swagger to test
+        [ProducesResponseType(typeof(IEnumerable<GrowZone>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllGrowZones()
+        {
+
+            return new OkObjectResult(await _plantService.GetAllGrowZones());
+        }
+
         // GET: based on id
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PlantFact),StatusCodes.Status200OK)]
