@@ -20,15 +20,17 @@ namespace PlantApi.Services
             return await _context.PlantFacts.ToListAsync();
         }
 
-        public async Task<PlantFact?> DeletePlantFact(long id)
+        public async Task<bool> DeletePlantFact(long id)
         {
 
             PlantFact? plantFact = await _context.PlantFacts.FindAsync(id);
 
-            _context.PlantFacts.Remove(plantFact);
-            _context.SaveChangesAsync();
+            if (plantFact is not null)
+            {
+                _context.PlantFacts.Remove(plantFact);
+            }
+            return await _context.SaveChangesAsync()>0;
 
-            return plantFact;
         }
 
         public async Task<PlantFact?> GetPlantFact(long id)

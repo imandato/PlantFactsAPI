@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PlantApi.Data;
 using PlantApi.Interfaces;
 using PlantApi.Models;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,11 +20,13 @@ namespace PlantApi.Controllers
     {
         private readonly PlantContext _context;
         private readonly IPlantService _plantService;
+        private readonly ILogger<PlantFactsController> _logger;
 
-        public PlantFactsController(PlantContext context, IPlantService plantService)
+        public PlantFactsController(PlantContext context, IPlantService plantService, ILogger<PlantFactsController> logger)
         {
             _context = context;
             _plantService = plantService;
+            _logger = logger;
         }
 
         // GET: all plant facts
@@ -62,18 +65,22 @@ namespace PlantApi.Controllers
             {
                 await _plantService.PutPlantFact(id, plantFact);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException dbEx)
             {
-                if (!PlantFactExists(id))
+                if (_plantService.GetPlantFact(id) is null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    _logger.LogError(dbEx, "exception happened in plant fact controller put method");
                 }
             }
-
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "exception happened in plant fact controller put method");
+            }
+            
             return NoContent();
         }
 
@@ -91,27 +98,13 @@ namespace PlantApi.Controllers
 
         //DELETE: based on id
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePlantFact(long id)
         {
-          
-            PlantFact? plantFact = (PlantFact?)await _plantService.DeletePlantFact(id);
 
-            if (plantFact == null)
-            {
-                return NotFound();
-            }
-
-            return new OkObjectResult(plantFact);
+            return new OkObjectResult(await _plantService.DeletePlantFact(id));
         }
-
-        //to check the plant fact in the try catch statement in PUT
-        private bool PlantFactExists(long id)
-        {
-            return (_context.PlantFacts?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-
     }
 }
 
