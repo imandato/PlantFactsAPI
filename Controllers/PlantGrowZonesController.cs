@@ -91,7 +91,7 @@ namespace PlantApi.Controllers
 
             await _plantGrowZonesService.PostPlantGrowZone(plantGrowZone);
 
-            return CreatedAtAction(nameof(GetPlantGrowZone), new { id = plantGrowZone.GrowZoneId }, null);
+            return CreatedAtAction(nameof(GetPlantGrowZone), new { id = plantGrowZone.Id }, null);
         }
 
         //DELETE: based on id
