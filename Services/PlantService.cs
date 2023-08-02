@@ -55,28 +55,6 @@ namespace PlantApi.Services
 
             return plantFact;
         }
-
-        public async Task<IEnumerable<GrowZone>> GetAllGrowZones()
-        {
-            return await _context.GrowZones.ToListAsync();
-        }
-
-        public async Task<GrowZone?> GetGrowZone(long id)
-        {
-            GrowZone? growZone = await _context.GrowZones.FindAsync(id);
-
-            return growZone;
-        }
-
-        public async Task<GrowZone> PutPlantFact(long id, GrowZone growZone)
-        {
-
-            _context.Entry(growZone).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return growZone;
-        }
-
     }
 }
 

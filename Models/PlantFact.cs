@@ -26,11 +26,12 @@ namespace PlantApi.Models
 
     public class PlantGrowZone
 	{
+		public long Id { get; set; }
 		public long PlantFactId { get; set; }
-		public PlantFact? PlantFact { get; set; }
+		//public PlantFact? PlantFact { get; set; }
 
 		public long GrowZoneId { get; set; }
-		public GrowZone? GrowZone { get; set; }
+		//public GrowZone? GrowZone { get; set; }
 
 	}
 }
