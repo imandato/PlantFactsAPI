@@ -17,6 +17,8 @@ namespace PlantApi.Interfaces
         //bool PlantFactExists(long id);
 
         Task<IEnumerable<GrowZone>> GetAllGrowZones();
+        Task<PlantFact?> GetGrowZone(long id);
+        Task<PlantFact> PutGrowZone(long id, PlantFact plantFact);
 
     }
 }

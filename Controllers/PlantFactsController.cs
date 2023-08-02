@@ -38,15 +38,6 @@ namespace PlantApi.Controllers
             return new OkObjectResult(await _plantService.GetAllPlantFacts()); 
         }
 
-        // GET: all plant facts
-        [HttpGet] //just for using with swagger to test
-        [ProducesResponseType(typeof(IEnumerable<GrowZone>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllGrowZones()
-        {
-
-            return new OkObjectResult(await _plantService.GetAllGrowZones());
-        }
-
         // GET: based on id
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PlantFact),StatusCodes.Status200OK)]
@@ -62,7 +53,6 @@ namespace PlantApi.Controllers
             }
             return new OkObjectResult(plantFact);
         }
-
 
         //PUT: based on id as well
         [HttpPut("{id}")]
@@ -82,12 +72,12 @@ namespace PlantApi.Controllers
                 }
                 else
                 {
-                    _logger.LogError(dbEx, "exception happened in plant fact controller put method");
+                    _logger.LogError(dbEx, "exception happened in plant fact controller plant fact put method");
                 }
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "exception happened in plant fact controller put method");
+                _logger.LogError(ex, "exception happened in plant fact controller plant fact put method");
             }
 
             return NoContent();
@@ -111,15 +101,63 @@ namespace PlantApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePlantFact(long id)
         {
-          
-            PlantFact? plantFact = (PlantFact?)await _plantService.DeletePlantFact(id);
+            return new OkObjectResult(await _plantService.DeletePlantFact(id));
+        }
 
-            if (plantFact == null)
+        //GROW ZONE TABLE
+
+        // GET: all GrowZones
+        [HttpGet] //just for using with swagger to test
+        [ProducesResponseType(typeof(IEnumerable<GrowZone>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllGrowZones()
+        {
+
+            return new OkObjectResult(await _plantService.GetAllGrowZones());
+        }
+
+        // GET: GrowZone based on id
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GrowZone), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetGrowZone(long id)
+        {
+
+            GrowZone? growZone = await _plantService.GetGrowZone(id);
+
+            if (growZone is null)
             {
                 return NotFound();
             }
+            return new OkObjectResult(growZone);
+        }
 
-            return new OkObjectResult(plantFact);
+        //PUT: based on id as well
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(GrowZone), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PutGrowZone(long id, GrowZone growZone)
+        {
+            try
+            {
+                await _plantService.PutGrowZone(id, growZone);
+            }
+            catch (DbUpdateConcurrencyException dbEx)
+            {
+                if (_plantService.GetGrowZone(id) is null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogError(dbEx, "exception happened in plant fact controller Grow Zone put method");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "exception happened in plant fact controller Grow Zone put method");
+            }
+
+            return NoContent();
         }
     }
 }

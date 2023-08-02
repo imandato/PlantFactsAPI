@@ -20,15 +20,15 @@ namespace PlantApi.Services
             return await _context.PlantFacts.ToListAsync();
         }
 
-        public async Task<PlantFact?> DeletePlantFact(long id)
+        public async Task<bool> DeletePlantFact(long id)
         {
-
             PlantFact? plantFact = await _context.PlantFacts.FindAsync(id);
 
-            _context.PlantFacts.Remove(plantFact);
-            _context.SaveChangesAsync();
-
-            return plantFact;
+            if (plantFact is not null)
+            {
+                _context.PlantFacts.Remove(plantFact);
+            }
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<PlantFact?> GetPlantFact(long id)
@@ -38,11 +38,7 @@ namespace PlantApi.Services
             return plantFact;
         }
 
-        //public bool PlantFactExists(long id)
-        //{
-        //    return _context.PlantFacts.Any(e => e.Id == id);
-        //}
-
+        
         public async Task<PlantFact?> PostPlantFact(PlantFact plantFact)
         {
             _context.PlantFacts.Add(plantFact);
@@ -58,13 +54,27 @@ namespace PlantApi.Services
             await _context.SaveChangesAsync();
 
             return plantFact;
-
-
         }
 
         public async Task<IEnumerable<GrowZone>> GetAllGrowZones()
         {
             return await _context.GrowZones.ToListAsync();
+        }
+
+        public async Task<GrowZone?> GetGrowZone(long id)
+        {
+            GrowZone? growZone = await _context.GrowZones.FindAsync(id);
+
+            return growZone;
+        }
+
+        public async Task<GrowZone> PutPlantFact(long id, GrowZone growZone)
+        {
+
+            _context.Entry(growZone).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return growZone;
         }
 
     }
