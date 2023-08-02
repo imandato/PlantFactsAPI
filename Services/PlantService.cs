@@ -28,7 +28,7 @@ namespace PlantApi.Services
             {
                 _context.PlantFacts.Remove(plantFact);
             }
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync()>0;
         }
 
         public async Task<PlantFact?> GetPlantFact(long id)

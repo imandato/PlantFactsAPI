@@ -73,14 +73,14 @@ namespace PlantApi.Controllers
                 }
                 else
                 {
-                    _logger.LogError(dbEx, "exception happened in plant fact controller plant fact put method");
+                    _logger.LogError(dbEx, "exception happened in plant fact controller put method");
                 }
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "exception happened in plant fact controller plant fact put method");
+                _logger.LogError(ex, "exception happened in plant fact controller put method");
             }
-
+          
             return NoContent();
         }
 
@@ -106,7 +106,7 @@ namespace PlantApi.Controllers
 
         //DELETE: based on id
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePlantFact(long id)
         {
