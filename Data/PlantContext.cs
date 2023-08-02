@@ -13,8 +13,7 @@ namespace PlantApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<PlantGrowZone>().HasKey(PlantGrowZone => new { PlantGrowZone.Id, PlantGrowZone.GrowZoneId });
+            modelBuilder.Entity<PlantGrowZone>().HasKey(pgz => new { pgz.PlantFactId, pgz.GrowZoneId });
         }
 
         public DbSet<PlantFact> PlantFacts { get; set; }
