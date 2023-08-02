@@ -54,10 +54,10 @@ namespace PlantApi.Controllers
             return new OkObjectResult(plantFact);
         }
 
-
         //PUT: based on id as well
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutPlantFact(long id, PlantFact plantFact)
         {
@@ -80,20 +80,28 @@ namespace PlantApi.Controllers
             {
                 _logger.LogError(ex, "exception happened in plant fact controller put method");
             }
-            
+          
             return NoContent();
         }
 
         //POST
         [HttpPost]
         [ProducesResponseType(typeof(PlantFact), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PostPlantFact(PlantFact plantFact)
         {
+            try
+            {
+                await _plantService.PostPlantFact(plantFact);
 
-            await _plantService.PostPlantFact(plantFact);
+                return CreatedAtAction(nameof(GetPlantFact), new { id = plantFact.Id }, null);
+            } catch (Exception ex)
+            {
+                _logger.LogError(ex, "exception happened in plant fact controller plant fact put method");
+            }
 
-            return CreatedAtAction(nameof(GetPlantFact), new { id = plantFact.Id }, null);
+            return NoContent();
         }
 
         //DELETE: based on id
@@ -102,7 +110,6 @@ namespace PlantApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePlantFact(long id)
         {
-
             return new OkObjectResult(await _plantService.DeletePlantFact(id));
         }
     }

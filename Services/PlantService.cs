@@ -22,7 +22,6 @@ namespace PlantApi.Services
 
         public async Task<bool> DeletePlantFact(long id)
         {
-
             PlantFact? plantFact = await _context.PlantFacts.FindAsync(id);
 
             if (plantFact is not null)
@@ -30,7 +29,6 @@ namespace PlantApi.Services
                 _context.PlantFacts.Remove(plantFact);
             }
             return await _context.SaveChangesAsync()>0;
-
         }
 
         public async Task<PlantFact?> GetPlantFact(long id)
@@ -40,11 +38,7 @@ namespace PlantApi.Services
             return plantFact;
         }
 
-        //public Task<PlantFact> PlantFactExists(long id)
-        //{
-        //    return _context.PlantFacts.Any(e => e.Id == id);
-        //}
-
+        
         public async Task<PlantFact?> PostPlantFact(PlantFact plantFact)
         {
             _context.PlantFacts.Add(plantFact);
@@ -60,8 +54,6 @@ namespace PlantApi.Services
             await _context.SaveChangesAsync();
 
             return plantFact;
-            
-            
         }
     }
 }

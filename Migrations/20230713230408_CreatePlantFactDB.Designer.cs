@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlantApi.Data;
 
@@ -11,9 +12,11 @@ using PlantApi.Data;
 namespace PlantApi.Migrations
 {
     [DbContext(typeof(PlantContext))]
-    partial class PlantContextModelSnapshot : ModelSnapshot
+    [Migration("20230713230408_CreatePlantFactDB")]
+    partial class CreatePlantFactDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,15 +74,28 @@ namespace PlantApi.Migrations
 
             modelBuilder.Entity("PlantApi.Models.PlantGrowZone", b =>
                 {
-                    b.Property<long>("PlantFactId")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<long>("GrowZoneId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("PlantFactId", "GrowZoneId");
+                    b.Property<long>("PlantFactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PlantGrowZoneGrowZoneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PlantGrowZoneId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id", "GrowZoneId");
 
                     b.HasIndex("GrowZoneId");
+
+                    b.HasIndex("PlantFactId");
+
+                    b.HasIndex("PlantGrowZoneId", "PlantGrowZoneGrowZoneId");
 
                     b.ToTable("PlantGrowZones");
                 });
@@ -87,7 +103,7 @@ namespace PlantApi.Migrations
             modelBuilder.Entity("PlantApi.Models.PlantGrowZone", b =>
                 {
                     b.HasOne("PlantApi.Models.GrowZone", "GrowZone")
-                        .WithMany("PlantGrowZones")
+                        .WithMany()
                         .HasForeignKey("GrowZoneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -98,17 +114,21 @@ namespace PlantApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlantApi.Models.PlantGrowZone", null)
+                        .WithMany("PlantGrowZones")
+                        .HasForeignKey("PlantGrowZoneId", "PlantGrowZoneGrowZoneId");
+
                     b.Navigation("GrowZone");
 
                     b.Navigation("PlantFact");
                 });
 
-            modelBuilder.Entity("PlantApi.Models.GrowZone", b =>
+            modelBuilder.Entity("PlantApi.Models.PlantFact", b =>
                 {
                     b.Navigation("PlantGrowZones");
                 });
 
-            modelBuilder.Entity("PlantApi.Models.PlantFact", b =>
+            modelBuilder.Entity("PlantApi.Models.PlantGrowZone", b =>
                 {
                     b.Navigation("PlantGrowZones");
                 });

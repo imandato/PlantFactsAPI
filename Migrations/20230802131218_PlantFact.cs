@@ -5,7 +5,7 @@
 namespace PlantApi.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatePlantFactDB : Migration
+    public partial class PlantFact : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
