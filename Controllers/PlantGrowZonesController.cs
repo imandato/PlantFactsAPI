@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PlantApi.Data;
 using PlantApi.Interfaces;
-using PlantApi.Models;
+using PlantApi.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace PlantApi.Controllers

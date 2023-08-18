@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
-using PlantApi.Models;
+using PlantApi.Entities;
 
 namespace PlantApi.Data
 {

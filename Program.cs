@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlantApi.Data;
 using PlantApi.Interfaces;
-using PlantApi.Models;
+using PlantApi.Entities;
 using PlantApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);

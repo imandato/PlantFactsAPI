@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlantApi.Models;
+using PlantApi.Entities;
 
 namespace PlantApi.Interfaces
 {
